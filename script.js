@@ -1,32 +1,21 @@
 // Your Script here.
-function rot13(encodedString) {
-  // Function to decode a single character using ROT13 algorithm
-  function decodeCharacter(char) {
-    const charCode = char.charCodeAt(0);
-    if (charCode >= 65 && charCode <= 90) {
-      // Decode uppercase letters
-      return String.fromCharCode(((charCode - 65 + 13) % 26) + 65);
+function rot13(str) {
+  var rotCharArray = [];
+  var regEx = /[A-Z]/;
+  str = str.split("");
+  for (var x in str) {
+    if (regEx.test(str[x])) {
+      // A more general approach
+      // possible because of modular arithmetic
+      // and cyclic nature of rot13 transform
+      rotCharArray.push(((str[x].charCodeAt() - 65 + 13) % 26) + 65);
+    } else {
+      rotCharArray.push(str[x].charCodeAt());
     }
-    // Return non-alphabetic characters as is
-    return char;
   }
-
-  // Split the encoded string into an array of characters
-  const encodedArray = encodedString.split("");
-
-  // Decode each character in the array
-  const decodedArray = encodedArray.map(decodeCharacter);
-
-  // Join the decoded characters back into a string
-  const decodedString = decodedArray.join("");
-
-  return decodedString;
+  str = String.fromCharCode.apply(String, rotCharArray);
+  return str;
 }
-
-// Example usage:
-const encodedString = "EBG13 rknzcyr.";
-const decodedString = rot13(encodedString);
-console.log(decodedString); // Output: ROT13 example.
 
 const lookup = {
   'A': 'N','B': 'O','C': 'P','D': 'Q',
